@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+<style>
+	#div1{
+		position: relative;
+		width: 400px;
+		height: 400px;
+		border: 1px solid #000;
+		margin:50px auto;
+		border-radius: 50%;
+	}
+	#div1 .hour{
+		position: absolute;
+		left:50%;
+		top:50%;
+		margin-left: -5px;
+		margin-top: -90px;
+		width: 10px;
+		height: 90px;
+		background: #000;
+		transform-origin:center bottom; 
+	}
+	#div1 .min{
+		position: absolute;
+		left:50%;
+		top:50%;
+		margin-left: -3px;
+		margin-top: -120px;
+		width: 6px;
+		height: 120px;
+		background: #000;
+		transform-origin:center bottom; 		
+	}
+	#div1 .sec{
+		position: absolute;
+		left:50%;
+		top:50%;
+		margin-left: -1px;
+		margin-top: -150px;
+		width: 2px;
+		height: 150px;
+		background: red;
+		transform-origin:center bottom; 		
+	}
+	#div1 .cap{
+		position: absolute;
+		left:50%;
+		top:50%;
+		margin-left: -10px;
+		margin-top: -10px;
+		width: 20px;
+		height: 20px;
+		border-radius: 50%;
+		background: #000;
+	}
+	#div1 span{
+		position: absolute;
+		left: 50%;
+		top:0;
+		margin-left:-2px;
+		width: 2px;
+		height: 10px;
+		background: #000;
+		transform-origin:center 200px; 
+	}
+	#div1 span em{
+		position: absolute;
+		left: 50%;
+		top:16px;
+		margin-left:-10px;
+		width: 20px;
+		text-align:center;
+		font-style:normal;
+	}
+	#div1 span.on{
+		height: 16px;
+		background: red;
+	}
+</style>
+<script>
+	window.onload=function(){
+		var oDiv=document.getElementById('div1');
+		var oH=oDiv.querySelector('.hour');
+		var oM=oDiv.querySelector('.min');
+		var oS=oDiv.querySelector('.sec');
+
+		function tab(){
+			var oDate=new Date();
+			var h=oDate.getHours();
+			var m=oDate.getMinutes();
+			var s=oDate.getSeconds();
+			var ms=oDate.getMilliseconds();
+
+			oH.style.transform='rotate('+(h*30+m/60*30)+'deg)';
+			oM.style.transform='rotate('+(m*6+s/60*6)+'deg)';
+			oS.style.transform='rotate('+(s*6+ms/1000*6)+'deg)';
+		}
+		tab();
+		setInterval(tab,30);
+		
+		for(var i=0; i<60; i++){
+			var oSpan=document.createElement('span');
+			oDiv.appendChild(oSpan);
+
+			if(i%5==0){
+				oSpan.classList.add("on");
+				oSpan.innerHTML = "<em>"+(i==0?12:i/5)+"</em>";
+				oSpan.children[0].style.transform = "rotate("+-i*6+"deg)";
+			}
+			oSpan.style.transform = "rotate("+i*6+"deg)";
+		}
+	}
+</script>	
+</head>
+<body>
+	<div id="div1">
+		<div class="hour"></div>
+		<div class="min"></div>
+		<div class="sec"></div>
+		<div class="cap"></div>
+	
+	</div>
+</body>
+</html>
